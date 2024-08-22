@@ -1,0 +1,68 @@
+C# code
+public class Solution {
+    public bool CanConstruct(string ransomNote, string magazine) {
+        var dictionary1 = new Dictionary<char, int>();
+        var dictionary2 = new Dictionary<char, int>();
+
+        for (int i = 0; i < ransomNote.Length; i++) {
+            if (dictionary1.ContainsKey(ransomNote[i])) {
+                dictionary1[ransomNote[i]]++;
+            } else {
+                dictionary1.Add(ransomNote[i], 1);
+            }
+        }
+
+        for (int i = 0; i < magazine.Length; i++) {
+            if (dictionary2.ContainsKey(magazine[i])) {
+                dictionary2[magazine[i]]++;
+            } else {
+                dictionary2.Add(magazine[i], 1);
+            }
+        }
+
+        foreach (var kvp in dictionary1) {
+            char key = kvp.Key;
+            int count1 = kvp.Value;
+
+            if (dictionary2.TryGetValue(key, out int count2)) {
+                if (count1 > count2) {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+
+        return true; 
+    }
+}
+
+
+
+
+
+// JS code
+
+  canConstruct(ransomNote, magazine) {
+        const dictionary1 = new Map();
+        const dictionary2 = new Map();
+
+        for (const char of ransomNote) {
+            dictionary1.set(char, (dictionary1.get(char) || 0) + 1);
+        }
+
+        // Fill dictionary2 with characters from magazine
+        for (const char of magazine) {
+            dictionary2.set(char, (dictionary2.get(char) || 0) + 1);
+        }
+
+        for (const [key, count1] of dictionary1.entries()) {
+            const count2 = dictionary2.get(key) || 0;
+            if (count1 > count2) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
